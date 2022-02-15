@@ -1,39 +1,57 @@
+import pprint
+
+from flask import render_template, request
+
 from app import app
-import controllers.functions as
+from config import POSTS_FILE
+from controllers.index import comments_post
+from controllers.post import get_post_id, comments_user
+from controllers.search import search_for_posts
+from controllers.users import get_posts_by_user
+from utils import read_json
 
-
-SETTINGS_FILE = 'static/settings.json'
-CANDIDATE_FILE = 'static/candidates.json'
-
-
-menu = {'Главная': '/',
-        'Список': '/list',
-        'Поиск': '/search',
-        'Скилы': '/skill'}
+posts = read_json(POSTS_FILE)
 
 
 @app.route('/')
-def index_url():
-    return functions.settings_json(SETTINGS_FILE, menu)
+def index():
+    """
+    Обработка главной страницы
+    """
+    posts_add_comment = comments_post()  #добавляем изменную структуру для вывода на главной страницы количества комментрариев
+    # pprint.pprint(posts_add_comment)
+    return render_template('index.html', posts=posts_add_comment)
 
 
-# @app.route('/', methods=["POST", "GET"])
-# def index_url():
-#     return functions.candidate_info(CANDIDATE_FILE)
+@app.route('/post/<int:id>')
+def post(id):
+    """
+    Обработка страницы поста
+    """
+    post = get_post_id(id)
+    comments = comments_user(id)
+    comments_len = len(comments)
+    return render_template('post.html', post=post, comments=comments, comments_len=comments_len)
 
 
-# @app.route('/list')
-# def list_candidates():
-#     return functions.list_url(menu, CANDIDATE_FILE)
-#
-#
-# @app.route('/search/')
-# def search():
-#     return functions.search_url(menu, CANDIDATE_FILE)
-#
-#
-#
-# @app.route('/skill')
-# def skill():
-#     return functions.skill_url(menu, CANDIDATE_FILE)
+@app.route('/search', methods=["GET", "POST"])
+def search():
+    """
+    Обработка страницы поиска
+    """
+    tag_name = request.args.get('tag')
+    if tag_name is None:
+        tag_name = ''
+    posts_search = search_for_posts(tag_name)
+    posts_len = len(posts_search)
+    return render_template('search.html', posts=posts_search, tag_name=tag_name, posts_len=posts_len)
 
+
+@app.route('/users/<user_name>')
+def user(user_name):
+    """
+    Обработка страницы пользователя
+    """
+    user_posts = get_posts_by_user(user_name, posts)
+    posts_len = len(user_posts)
+    return render_template('user-feed.html', user_posts=user_posts, posts_len=posts_len, user_name=user_name)

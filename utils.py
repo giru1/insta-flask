@@ -1,7 +1,14 @@
 import json
 
 
-def read_file(file):
+def read_json(file):
+    """
+    читаем файлы json
+    """
     with open(file, encoding="utf-8") as f:
-        result = json.load(f)
-    return result
+        posts = json.load(f)
+    return posts
+
+
+
+
