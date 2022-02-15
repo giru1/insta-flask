@@ -18,8 +18,7 @@ def index():
     """
     Обработка главной страницы
     """
-    posts_add_comment = comments_post()  #добавляем изменную структуру для вывода на главной страницы количества комментрариев
-    # pprint.pprint(posts_add_comment)
+    posts_add_comment = comments_post()  # добавляем изменную структуру для вывода на главной страницы количества комментрариев
     return render_template('index.html', posts=posts_add_comment)
 
 
