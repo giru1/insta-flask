@@ -38,12 +38,12 @@ def search():
     """
     Обработка страницы поиска
     """
-    tag_name = request.args.get('tag')
-    if tag_name is None:
-        tag_name = ''
-    posts_search = search_for_posts(tag_name)
+    word = request.args.get('tag')
+    if word is None:
+        word = ''
+    posts_search = search_for_posts(word)
     posts_len = len(posts_search)
-    return render_template('search.html', posts=posts_search, tag_name=tag_name, posts_len=posts_len)
+    return render_template('search.html', posts=posts_search, tag_name=word, posts_len=posts_len)
 
 
 @app.route('/users/<user_name>')
@@ -54,3 +54,8 @@ def user(user_name):
     user_posts = get_posts_by_user(user_name, posts)
     posts_len = len(user_posts)
     return render_template('user-feed.html', user_posts=user_posts, posts_len=posts_len, user_name=user_name)
+
+
+@app.route('/tag/')
+def tag():
+    return render_template('tag.html')
