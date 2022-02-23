@@ -1,5 +1,3 @@
-import pprint
-
 from flask import render_template, request
 
 from app import app
@@ -54,8 +52,3 @@ def user(user_name):
     user_posts = get_posts_by_user(user_name, posts)
     posts_len = len(user_posts)
     return render_template('user-feed.html', user_posts=user_posts, posts_len=posts_len, user_name=user_name)
-
-
-@app.route('/tag/')
-def tag():
-    return render_template('tag.html')
