@@ -1,3 +1,5 @@
+import pprint
+
 from flask import Flask
 from flask import render_template, request
 
@@ -28,6 +30,7 @@ def post(id):
     Обработка страницы поста
     """
     post = get_post_id(id)
+    pprint.pprint(post)
     comments = comments_user(id)
     comments_len = len(comments)
     return render_template('post.html', post=post, comments=comments, comments_len=comments_len)

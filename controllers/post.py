@@ -1,17 +1,18 @@
 from config import POSTS_FILE, COMMENTS_FILE
 from utils import read_json
 
-
+posts = read_json(POSTS_FILE)
 def get_post_id(id):
     """
     Показываем пост на основании выбранного id
     """
-    posts = read_json(POSTS_FILE)
+
 
     for post in posts:
         if post['pk'] == int(id):
             return post
-        return None
+    return None
+
 
 
 

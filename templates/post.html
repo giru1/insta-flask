@@ -18,6 +18,7 @@
   </header>
   <main class="container">
     <section class="items">
+    {% if post %}
       <div class="items__item item item--post">
         <div class="item__top">
           <a href="/user-feed.html" class="item__head">
@@ -64,6 +65,9 @@
           </form>
         </div>
       </div>
+    {% else %}
+        <h1>Пост не найден или не существует</h1>
+    {% endif %}
     </section>
   </main>
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
