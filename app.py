@@ -38,7 +38,7 @@ def search():
     """
     Обработка страницы поиска
     """
-    word = request.args.get('tag')
+    word = request.args.get('tag', '')
     if word is None:
         word = ''
     posts_search = search_for_posts(word)

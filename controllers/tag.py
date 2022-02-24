@@ -1,8 +1,6 @@
 from config import POSTS_FILE
 from utils import read_json
 
-posts = read_json(POSTS_FILE)
-
 
 def get_tag():
     """
@@ -11,6 +9,7 @@ def get_tag():
     """
     tag_name = ''
     select_posts = []
+    posts = read_json(POSTS_FILE)
 
     for post in posts:
         if '#' + tag_name in post.get('content'):
