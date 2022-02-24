@@ -11,7 +11,8 @@ def get_post_id(id):
     for post in posts:
         if post['pk'] == int(id):
             return post
-        return 'Пост не найден'
+        return None
+
 
 
 def comments_user(id):

@@ -39,8 +39,6 @@ def search():
     Обработка страницы поиска
     """
     word = request.args.get('tag', '')
-    if word is None:
-        word = ''
     posts_search = search_for_posts(word)
     posts_len = len(posts_search)
     return render_template('search.html', posts=posts_search, tag_name=word, posts_len=posts_len)
@@ -57,4 +55,4 @@ def user(user_name):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
